@@ -159,8 +159,8 @@ public class UserService {
 
         checkReq.setInputData(input);
 
-        String destionationURL = "http://localhost:8081/";// Diisi API MF.///////////////////////
-        //String destionationURL = "https://10.20.218.9:9079/absentmg-in-out/absent";
+        //String destionationURL = "http://localhost:8081/";// Diisi API MF.///////////////////////
+        String destionationURL = "https://10.20.218.9:9079/absentmg-in-out/absent";
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(checkReq));
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
         String text = responseEntity.getBody();
@@ -193,8 +193,8 @@ public class UserService {
 
         resp.setInputHistory(input);
 
-        String destionationURL = "http://www.mocky.io/v2/5e465de03300002d410260c0";// Diisi API MF.
-        //String destionationURL = "https://10.20.218.9:9079/history-absentmg/history";
+        //String destionationURL = "http://www.mocky.io/v2/5e465de03300002d410260c0";// Diisi API MF.
+        String destionationURL = "https://10.20.218.9:9079/history-absentmg/history";
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(resp));
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
         String text = responseEntity.getBody();
