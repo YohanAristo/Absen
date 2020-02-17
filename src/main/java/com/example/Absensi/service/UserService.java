@@ -58,8 +58,8 @@ public class UserService {
         }
 
         User userFound = userDao.findById(id).get();
-        if(input.getName()!=null)
-            userFound.setName(input.getName());
+//        if(input.getName()!=null)
+//            userFound.setName(input.getName());
         if(input.getPassword()!=null)
             userFound.setPassword(input.getPassword());
 
