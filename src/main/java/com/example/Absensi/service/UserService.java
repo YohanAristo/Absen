@@ -201,11 +201,19 @@ public class UserService {
 
         GetUserHistoryRespMainFrame response1 = gson.fromJson(text, GetUserHistoryRespMainFrame.class);
 
+        List<HistData> list = response1.getOutputHistory().getHistData();
+
+        for(HistData data : list){
+            data.setOutputTimeIn(convertTime(data.getOutputTimeIn()));
+            data.setOutputTimeOut(convertTime(data.getOutputTimeOut()));
+            data.setOutputDate(convertDate(data.getOutputDate()));
+        }
+
         response.setOutputUserId(response1.getOutputHistory().getOutputUserId());
         response.setOutputMm(response1.getOutputHistory().getOutputMm());
         response.setOutputYyyy(response1.getOutputHistory().getOutputYyyy());
         response.setOutputAttend(response1.getOutputHistory().getOutputAttend());
-        response.setHistData(response1.getOutputHistory().getHistData());
+        response.setHistData(list);
         response.setErrorCode(response1.getOutputHistory().getErrorCode());
         response.setErrorMessage(response1.getOutputHistory().getErrorMessage());
 
@@ -213,14 +221,27 @@ public class UserService {
     }
 
     public String convertTime(String input){
-        String result,hh, mm, ss;
-        String[] split = input.split(".", -2);
+        String result, hh, mm, ss;
+        String[] splits = input.split("\\.");
 
-        hh = split[0];
-        mm = split[1];
-        ss = split[2];
+        hh = splits[0];
+        mm = splits[1];
+        ss = splits[2];
 
         result = hh.concat(":").concat(mm).concat(":").concat(ss);
+
+        return result;
+    }
+
+    public String convertDate(String input){
+        String result, day, mon, month, year;
+        String[] split = input.split("-");
+
+        year = split[0];
+        mon = getMonth(Integer.parseInt(split[1]));
+        day = split[2];
+
+        result = day.concat(" ").concat(mon).concat(" ").concat(year);
 
         return result;
     }
