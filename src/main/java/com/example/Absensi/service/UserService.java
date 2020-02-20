@@ -218,23 +218,31 @@ public class UserService {
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
         String text = responseEntity.getBody();
 
-        GetUserHistoryRespMainFrame response1 = gson.fromJson(text, GetUserHistoryRespMainFrame.class);
+        if(responseEntity.getStatusCode()== HttpStatus.OK) {
 
-        List<HistData> list = response1.getOutputHistory().getHistData();
+            GetUserHistoryRespMainFrame response1 = gson.fromJson(text, GetUserHistoryRespMainFrame.class);
 
-        for(HistData data : list){
-            data.setOutputTimeIn(convertTime(data.getOutputTimeIn()));
-            data.setOutputTimeOut(convertTime(data.getOutputTimeOut()));
-            data.setOutputDate(convertDate(data.getOutputDate()));
+            List<HistData> list = response1.getOutputHistory().getHistData();
+
+            for (HistData data : list) {
+                data.setOutputTimeIn(convertTime(data.getOutputTimeIn()));
+                data.setOutputTimeOut(convertTime(data.getOutputTimeOut()));
+                data.setOutputDate(convertDate(data.getOutputDate()));
+            }
+
+            response.setOutputUserId(response1.getOutputHistory().getOutputUserId());
+            response.setOutputMm(response1.getOutputHistory().getOutputMm());
+            response.setOutputYyyy(response1.getOutputHistory().getOutputYyyy());
+            response.setOutputAttend(response1.getOutputHistory().getOutputAttend());
+            response.setHistData(list);
+            response.setErrorCode(response1.getOutputHistory().getErrorCode());
+            response.setErrorMessage(response1.getOutputHistory().getErrorMessage());
         }
-
-        response.setOutputUserId(response1.getOutputHistory().getOutputUserId());
-        response.setOutputMm(response1.getOutputHistory().getOutputMm());
-        response.setOutputYyyy(response1.getOutputHistory().getOutputYyyy());
-        response.setOutputAttend(response1.getOutputHistory().getOutputAttend());
-        response.setHistData(list);
-        response.setErrorCode(response1.getOutputHistory().getErrorCode());
-        response.setErrorMessage(response1.getOutputHistory().getErrorMessage());
+        else
+        {
+            response.setErrorCode("99");
+            response.setErrorMessage("Failed");
+        }
 
         return response;
     }

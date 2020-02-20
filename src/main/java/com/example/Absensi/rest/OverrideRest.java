@@ -1,6 +1,7 @@
 package com.example.Absensi.rest;
 
 import com.example.Absensi.entity.overrideEntity.GetOverrideRespList;
+import com.example.Absensi.entity.overrideEntity.GetOverrideRespMainFrame;
 import com.example.Absensi.entity.overrideEntity.PostOverrideReq;
 import com.example.Absensi.entity.BaseResponse;
 import com.example.Absensi.model.Override;
@@ -29,9 +30,9 @@ public class OverrideRest {
         return overrideService.approvalOverride(override);
     }
 
-//    @GetMapping(value = "absentmg-in-out/override/list")
-//    public GetOverrideRespList userList(){
-//        return overrideService.getUserList();
-//    }
+    @GetMapping(value = "absentmg-in-out/override/list")
+    public GetOverrideRespList overrideList(){
+        return overrideService.getOverrideList();
+    }
 
 }

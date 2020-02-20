@@ -1,7 +1,7 @@
 package com.example.Absensi.service;
 
 import com.example.Absensi.dao.OverrideDao;
-import com.example.Absensi.entity.overrideEntity.PostOverrideReq;
+import com.example.Absensi.entity.overrideEntity.*;
 import com.example.Absensi.entity.BaseResponse;
 import com.example.Absensi.model.Override;
 import com.google.gson.FieldNamingPolicy;
@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 public class OverrideService {
@@ -31,11 +33,6 @@ public class OverrideService {
         override1.setDate(override.getDate());
         override1.setTime(override.getTime());
         override1.setAction(override.getAction());
-
-        System.out.println(override1.getDate());
-        System.out.println(override1.getUserId());
-        System.out.println(override1.getTime());
-        System.out.println(override1.getAction());
 
         Override saveOverride = overrideDao.save(override1);
 
@@ -67,15 +64,44 @@ public class OverrideService {
         return response;
     }
 
+    public GetOverrideRespList getOverrideList(){
+        GetOverrideRespList respList = new GetOverrideRespList();
+
+        List<Override> overrides = overrideDao.findAll();
+
+        respList.setOverrideList(overrides);
+        respList.setErrorCode("00");
+        respList.setErrorMessage("Successfully Show User");
+        return respList;
+    }
+
     public BaseResponse approvalOverride(Override override){
         BaseResponse response = new BaseResponse();
         RestTemplate restTemplate = new RestTemplate();
-        PostOverrideReq postOverrideReq = new PostOverrideReq();
+        PostOverrideReqMainFrame postOverrideReq = new PostOverrideReqMainFrame();
+        InputOverride inputOverride = new InputOverride();
 
-        postOverrideReq.setAction(override.getAction());
-        postOverrideReq.setDate(override.getDate());
-        postOverrideReq.setTime(convertTimeAndroid(override.getTime()));
-        postOverrideReq.setUserId(override.getUserId());
+        if(override.getAction().equalsIgnoreCase("I"))
+        {
+            inputOverride.setInputAction("V");
+            inputOverride.setInputUserId(override.getUserId());
+            inputOverride.setInputDate(override.getDate());
+            inputOverride.setInputTimeIn(override.getTime());
+            postOverrideReq.setInputOverride(inputOverride);
+        }
+        else
+        {
+            inputOverride.setInputAction("V");
+            inputOverride.setInputUserId(override.getUserId());
+            inputOverride.setInputDate(override.getDate());
+            inputOverride.setInputTimeOut(convertTimeAndroid(override.getTime()));
+            postOverrideReq.setInputOverride(inputOverride);
+        }
+
+//        postOverrideReq.setAction(override.getAction());
+//        postOverrideReq.setDate(override.getDate());
+//        postOverrideReq.setTime(convertTimeAndroid(override.getTime()));
+//        postOverrideReq.setUserId(override.getUserId());
 
         String destionationURL = "https://10.20.218.9:9079/history-absentmg/history";//////////////////////////
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(postOverrideReq));
@@ -83,7 +109,7 @@ public class OverrideService {
         String text = responseEntity.getBody();
 
         if(responseEntity.getStatusCode()== HttpStatus.OK) {
-            BaseResponse response1 = gson.fromJson(text, BaseResponse.class);
+            GetOverrideRespMainFrame response1 = gson.fromJson(text, GetOverrideRespMainFrame.class);
 
             if(!overrideDao.existsById(override.getId()))
             {
@@ -93,10 +119,11 @@ public class OverrideService {
             }
 
             overrideDao.deleteById(override.getId());
-            response.setErrorMessage(response1.getErrorMessage());
-            response.setErrorCode(response1.getErrorCode());
+            response.setErrorMessage(response1.getOutputOverride().getErrorMessage());
+            response.setErrorCode(response1.getOutputOverride().getErrorCode());
         }
-        else{
+        else
+        {
             response.setErrorCode("99");
             response.setErrorMessage("Failed");
         }
@@ -115,18 +142,4 @@ public class OverrideService {
 
         return result;
     }
-    /*
-    public String convertTime(String input){
-        String result, hh, mm, ss;
-        String[] splits = input.split("\\.");
-
-        hh = splits[0];
-        mm = splits[1];
-        ss = splits[2];
-
-        result = hh.concat(":").concat(mm).concat(":").concat(ss);
-
-        return result;
-    }
-    * */
 }
