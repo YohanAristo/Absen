@@ -1,5 +1,9 @@
 package com.example.Absensi.entity.overrideEntity;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PostOverrideReq {
     private String userId;
     private String date;

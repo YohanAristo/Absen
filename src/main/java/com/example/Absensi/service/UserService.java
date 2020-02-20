@@ -1,6 +1,7 @@
 package com.example.Absensi.service;
 
 import com.example.Absensi.dao.UserDao;
+import com.example.Absensi.entity.BaseResponse;
 import com.example.Absensi.entity.userEntity.*;
 import com.example.Absensi.model.User;
 import com.google.gson.FieldNamingPolicy;
@@ -12,8 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.text.DateFormatSymbols;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -24,11 +24,11 @@ public class UserService {
     Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
     //ADMIN
-    public BaseResponse postUser(User user){
+    public BaseResponse postUser(PostUserReq user){
         BaseResponse response = new BaseResponse();
         User user1 = new User();
 
-        user1.setRole(user.getRole());
+        user1.setRole("member");
         user1.setName(user.getName());
         user1.setPassword(user.getPassword());
         user1.setUserId(user.getUserId());
@@ -77,11 +77,30 @@ public class UserService {
         }
     }
 
+//    public GetUserRespList1 getUserList(){
+//        GetUserRespList1 respList = new GetUserRespList1();
+//
+//        List<User> users = userDao.findAll();
+//        respList.setUserList(users);
+//        respList.setErrorCode("00");
+//        respList.setErrorMessage("Successfully Show User");
+//        return respList;
+//    }
+
     public GetUserRespList getUserList(){
         GetUserRespList respList = new GetUserRespList();
+        List<UserList> myList = new ArrayList<>();
 
         List<User> users = userDao.findAll();
-        respList.setUserList(users);
+
+        for(User data : users){
+           UserList temp = new UserList();
+           temp.setUserId(data.getUserId());
+           temp.setName(data.getName());
+           myList.add(temp);
+        }
+
+        respList.setUserList(myList);
         respList.setErrorCode("00");
         respList.setErrorMessage("Successfully Show User");
         return respList;
@@ -246,36 +265,7 @@ public class UserService {
         return result;
     }
 
-    ///////////////////////////////////////////////////////////////////////////
     public String getMonth(int month) {
         return new DateFormatSymbols().getMonths()[month-1];
-    }
-
-    /////////////////////////////////////////////////////////////////////////
-    public BaseResponse test(){
-        //GetCheckRespMainFrame resp;
-        BaseResponse resp1 = new BaseResponse();
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-
-        String resourceURL = "http://5e3a83908d7e1300149cdbd9.mockapi.io/history/check/1";// Di isi API MF//////////////////
-        HttpEntity<String> entityGet = new HttpEntity<String>(headers);
-        ResponseEntity<String> responseGet = restTemplate.exchange(resourceURL, HttpMethod.GET, entityGet, String.class);
-        String text = responseGet.getBody();
-
-        if(responseGet.getStatusCode()==HttpStatus.OK) {
-            GetCheckRespMainFrame resp = gson.fromJson(text, GetCheckRespMainFrame.class);
-            resp1.setErrorCode(resp.getOutputData().getErrorCode());
-            resp1.setErrorMessage(resp.getOutputData().getErrorMessage());
-        }
-
-        return resp1;
-    }
-
-    public String testMonth(int month){
-        String temp = getMonth(month);
-
-        return temp;
     }
 }

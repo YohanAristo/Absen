@@ -5,15 +5,17 @@ import com.example.Absensi.model.User;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class GetUserResp extends BaseResponse {
-   private User user;
+import java.util.List;
 
-    public User getUser() {
-        return user;
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public class GetUserRespList1 extends BaseResponse {
+    private List<User> userList;
+
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 }

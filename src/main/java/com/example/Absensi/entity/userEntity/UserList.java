@@ -1,14 +1,12 @@
 package com.example.Absensi.entity.userEntity;
 
-import com.example.Absensi.entity.BaseResponse;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class PostUserHistoryReq extends BaseResponse {
+public class UserList {
     private String userId;
-    private String month;
-    private String year;
+    private String name;
 
     public String getUserId() {
         return userId;
@@ -18,21 +16,11 @@ public class PostUserHistoryReq extends BaseResponse {
         this.userId = userId;
     }
 
-    public String getMonth() {
-        return month;
+    public String getName() {
+        return name;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    public void setName(String name) {
+        this.name = name;
     }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-
 }

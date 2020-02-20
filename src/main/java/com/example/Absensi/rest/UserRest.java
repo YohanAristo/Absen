@@ -1,8 +1,8 @@
 package com.example.Absensi.rest;
 
+import com.example.Absensi.entity.BaseResponse;
 import com.example.Absensi.entity.userEntity.*;
 import com.example.Absensi.service.UserService;
-import com.example.Absensi.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ public class UserRest {
     UserService userService;
 
     @PostMapping(value = "interns")
-    public BaseResponse createUser(@RequestBody User user){
+    public BaseResponse createUser(@RequestBody PostUserReq user){
         return userService.postUser(user);
     }
 
@@ -42,43 +42,14 @@ public class UserRest {
         return userService.loginProcess(userLogin);
     }
 
-    @PostMapping(value = "interns/historyList")
+    @PostMapping(value = "absentmg-in-out/history")
     public GetUserHistoryResp historyList(@RequestBody PostUserHistoryReq user){
         return userService.userHistory(user);
     }
 
-//    @PostMapping(value = "intern/check")
-//    public String checkState(@RequestBody PostCheckReq check){
-//        return userService.checkState(check);
-//    }
-
-//    @PostMapping(value = "intern/history")
-//    public OutputHistory userHistory(){
-//        return userService.userHistory();
-//    }
-
-//    @PostMapping(value = "interns/historyReq")
-//    public String historySearch(@RequestBody PostUserHistoryReq user){
-//        return userService.userHistorySearch(user);
-//    }
-//
-//    @PostMapping(value = "interns/historyReqList")
-//    public String historySearchList(@RequestBody PostUserHistoryReq user){
-//        return userService.userHistorySearch(user);
-//    }
-
-//    @PostMapping(value = "intern/historyList")
-//    public PostUserHistoryReq userHistoryList(){
-//        return userService.userHistory();
-//    }
-
-    @GetMapping(value = "interns/get")
-    public BaseResponse test(){
-        return userService.test();
+    @PostMapping(value = "absentmg-in-out/absent")
+    public BaseResponse checkState(@RequestBody PostCheckReq check){
+        return userService.checkState(check);
     }
 
-    @PostMapping(value = "test/{id}")
-    public String editUser(@PathVariable(value = "id") int id){
-        return userService.testMonth(id);
-    }
 }
