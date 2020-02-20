@@ -1,4 +1,4 @@
-package com.example.Absensi.entity;
+package com.example.Absensi.entity.userEntity;
 
 public class PostUserReq {
     private String userId;

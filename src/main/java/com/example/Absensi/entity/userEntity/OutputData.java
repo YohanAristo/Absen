@@ -1,14 +1,35 @@
-package com.example.Absensi.entity;
+package com.example.Absensi.entity.userEntity;
 
+import com.example.Absensi.entity.userEntity.BaseResponse;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class HistData {
+public class OutputData extends BaseResponse {
+    private String outputMfc;
+    private String outputUserId;
     private String outputDate;
     private String outputTimeIn;
     private String outputTimeOut;
+    private String outputStatus;
     private String outputDesc;
+
+
+    public String getOutputMfc() {
+        return outputMfc;
+    }
+
+    public void setOutputMfc(String outputMfc) {
+        this.outputMfc = outputMfc;
+    }
+
+    public String getOutputUserId() {
+        return outputUserId;
+    }
+
+    public void setOutputUserId(String outputUserId) {
+        this.outputUserId = outputUserId;
+    }
 
     public String getOutputDate() {
         return outputDate;
@@ -32,6 +53,14 @@ public class HistData {
 
     public void setOutputTimeOut(String outputTimeOut) {
         this.outputTimeOut = outputTimeOut;
+    }
+
+    public String getOutputStatus() {
+        return outputStatus;
+    }
+
+    public void setOutputStatus(String outputStatus) {
+        this.outputStatus = outputStatus;
     }
 
     public String getOutputDesc() {

@@ -1,20 +1,20 @@
-package com.example.Absensi.entity;
+package com.example.Absensi.entity.userEntity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class PutUserReq {
-//    private String name;
+public class PostUserLogin {
+    private String userId;
     private String password;
 
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getPassword() {
         return password;

@@ -1,4 +1,4 @@
-package com.example.Absensi.entity;
+package com.example.Absensi.entity.userEntity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class GetUserHistoryResp extends BaseResponse{
+public class GetUserHistoryResp extends BaseResponse {
     private String outputUserId;
     private String outputMm;
     private String outputYyyy;

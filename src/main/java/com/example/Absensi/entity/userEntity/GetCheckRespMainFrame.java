@@ -1,4 +1,4 @@
-package com.example.Absensi.entity;
+package com.example.Absensi.entity.userEntity;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

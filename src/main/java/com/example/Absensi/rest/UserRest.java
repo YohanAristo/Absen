@@ -1,6 +1,6 @@
 package com.example.Absensi.rest;
 
-import com.example.Absensi.entity.*;
+import com.example.Absensi.entity.userEntity.*;
 import com.example.Absensi.service.UserService;
 import com.example.Absensi.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

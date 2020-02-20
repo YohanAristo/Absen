@@ -1,7 +1,7 @@
 package com.example.Absensi.service;
 
 import com.example.Absensi.dao.UserDao;
-import com.example.Absensi.entity.*;
+import com.example.Absensi.entity.userEntity.*;
 import com.example.Absensi.model.User;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -37,12 +37,12 @@ public class UserService {
 
         if(saveUser == null) {
             response.setErrorCode("99");
-            response.setErrorMessage("User Gagal Ditambahkan");
+            response.setErrorMessage("Failed to Add User");
             return response;
         }
         else {
             response.setErrorCode("00");
-            response.setErrorMessage("User Berhasil Ditambahkan");
+            response.setErrorMessage("Successfully Add User");
             return response;
         }
     }
@@ -53,7 +53,7 @@ public class UserService {
         if(!userDao.existsById(id))
         {
             response.setErrorCode("99");
-            response.setErrorMessage("User Tidak Ditemukan");
+            response.setErrorMessage("User Not Found");
             return response;
         }
 
@@ -67,12 +67,12 @@ public class UserService {
 
         if(editUser == null) {
             response.setErrorCode("99");
-            response.setErrorMessage("User Gagal Diedit");
+            response.setErrorMessage("Failed to Edit User Data");
             return response;
         }
         else {
             response.setErrorCode("00");
-            response.setErrorMessage("User Berhasil Diedit");
+            response.setErrorMessage("Successfully Edit User Data");
             return response;
         }
     }
@@ -83,7 +83,7 @@ public class UserService {
         List<User> users = userDao.findAll();
         respList.setUserList(users);
         respList.setErrorCode("00");
-        respList.setErrorMessage("Berhasil Tampilkan User");
+        respList.setErrorMessage("Successfully Show User");
         return respList;
     }
 
@@ -93,13 +93,13 @@ public class UserService {
         if(!userDao.existsById(id))
         {
             response.setErrorCode("99");
-            response.setErrorMessage("User Tidak Ditemukan");
+            response.setErrorMessage("User Not Found");
             return response;
         }
 
         userDao.deleteById(id);
         response.setErrorCode("00");
-        response.setErrorMessage("User Berhasil Dihapus");
+        response.setErrorMessage("Successfully Delete User");
         return response;
     }
 
@@ -109,7 +109,7 @@ public class UserService {
         if(!userDao.existsById(id))
         {
             resp.setErrorCode("99");
-            resp.setErrorMessage("User Tidak Ditemukan");
+            resp.setErrorMessage("User Not Found");
             return resp;
         }
 
@@ -117,7 +117,7 @@ public class UserService {
 
         resp.setUser(user);
         resp.setErrorCode("99");
-        resp.setErrorMessage("User Ditemukan");
+        resp.setErrorMessage("Successfully Get User");
         return resp;
     }
 
@@ -127,7 +127,7 @@ public class UserService {
         if(!userDao.existsById(input.getUserId()))
         {
             resp.setErrorCode("99");
-            resp.setErrorMessage("User Tidak Ditemukan");
+            resp.setErrorMessage("User Not Found");
             return resp;
         }
 
@@ -135,12 +135,12 @@ public class UserService {
         if(user.getPassword().equalsIgnoreCase(input.getPassword())) {
             resp.setUser(user);
             resp.setErrorCode("00");
-            resp.setErrorMessage("Berhasil Login");
+            resp.setErrorMessage("Login Successfully");
             return resp;
         }
         else {
             resp.setErrorCode("99");
-            resp.setErrorMessage("Gagal Login");
+            resp.setErrorMessage("Login Failed");
             return resp;
         }
     }
