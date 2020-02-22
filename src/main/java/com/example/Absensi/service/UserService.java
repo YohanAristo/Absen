@@ -233,7 +233,7 @@ public class UserService {
             response.setOutputUserId(response1.getOutputHistory().getOutputUserId());
             response.setOutputMm(response1.getOutputHistory().getOutputMm());
             response.setOutputYyyy(response1.getOutputHistory().getOutputYyyy());
-            response.setOutputAttend(response1.getOutputHistory().getOutputAttend());
+            response.setOutputAttend(String.valueOf(response1.getOutputHistory().getOutputAttend()));
             response.setHistData(list);
             response.setErrorCode(response1.getOutputHistory().getErrorCode());
             response.setErrorMessage(response1.getOutputHistory().getErrorMessage());

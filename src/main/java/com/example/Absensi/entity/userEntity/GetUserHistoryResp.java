@@ -11,7 +11,7 @@ public class GetUserHistoryResp extends BaseResponse {
     private String outputUserId;
     private String outputMm;
     private String outputYyyy;
-    private int outputAttend;
+    private String outputAttend;
     private List<HistData> histData;
 
     public String getOutputUserId() {
@@ -38,11 +38,11 @@ public class GetUserHistoryResp extends BaseResponse {
         this.outputYyyy = outputYyyy;
     }
 
-    public int getOutputAttend() {
+    public String getOutputAttend() {
         return outputAttend;
     }
 
-    public void setOutputAttend(int outputAttend) {
+    public void setOutputAttend(String outputAttend) {
         this.outputAttend = outputAttend;
     }
 

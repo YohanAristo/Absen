@@ -86,7 +86,7 @@ public class OverrideService {
             inputOverride.setInputAction("V");
             inputOverride.setInputUserId(override.getUserId());
             inputOverride.setInputDate(override.getDate());
-            inputOverride.setInputTimeIn(override.getTime());
+            inputOverride.setInputTimeIn(convertTimeAndroid(override.getTime()));
             postOverrideReq.setInputOverride(inputOverride);
         }
         else
@@ -98,11 +98,6 @@ public class OverrideService {
             postOverrideReq.setInputOverride(inputOverride);
         }
 
-//        postOverrideReq.setAction(override.getAction());
-//        postOverrideReq.setDate(override.getDate());
-//        postOverrideReq.setTime(convertTimeAndroid(override.getTime()));
-//        postOverrideReq.setUserId(override.getUserId());
-
         String destionationURL = "https://10.20.218.9:9079/history-absentmg/history";//////////////////////////
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(postOverrideReq));
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
@@ -111,7 +106,7 @@ public class OverrideService {
         if(responseEntity.getStatusCode()== HttpStatus.OK) {
             GetOverrideRespMainFrame response1 = gson.fromJson(text, GetOverrideRespMainFrame.class);
 
-            if(!overrideDao.existsById(override.getId()))
+            if(overrideDao.existsById(override.getId()))
             {
                 response.setErrorCode("99");
                 response.setErrorMessage("Override Approval Error");
@@ -142,4 +137,9 @@ public class OverrideService {
 
         return result;
     }
+
+    public boolean checkExist(int id){
+        return overrideDao.existsById(id);
+    }
+
 }
