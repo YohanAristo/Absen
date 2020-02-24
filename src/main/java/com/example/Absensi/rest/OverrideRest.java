@@ -20,10 +20,11 @@ public class OverrideRest {
         return overrideService.postOverride(overrideReq);
     }
 
-    @DeleteMapping(value = "absentmg-in-out/override/reject")
-    public BaseResponse deleteOverride(@RequestBody Override override){
-        return overrideService.deleteOverride(override);
+    @DeleteMapping(value = "absentmg-in-out/override/reject/{id}")
+    public BaseResponse deleteOverride(@PathVariable(value = "id") Integer id){
+        return overrideService.deleteOverride(id);
     }
+
 
     @PostMapping(value = "absentmg-in-out/override/accept")
     public BaseResponse approvalOverride(@RequestBody Override override){

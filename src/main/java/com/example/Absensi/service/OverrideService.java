@@ -48,21 +48,37 @@ public class OverrideService {
         }
     }
 
-    public BaseResponse deleteOverride(Override override){
+    public BaseResponse deleteOverride(Integer input){
         BaseResponse response = new BaseResponse();
 
-        if(!overrideDao.existsById(override.getId()))
+        if(!overrideDao.existsById(input))
         {
             response.setErrorCode("99");
             response.setErrorMessage("Override Request Not Found");
             return response;
         }
 
-        overrideDao.deleteById(override.getId());
+        overrideDao.deleteById(input);
         response.setErrorCode("00");
         response.setErrorMessage("Successfully Delete Override");
         return response;
     }
+
+//    public BaseResponse deleteOverride(Override override){
+//        BaseResponse response = new BaseResponse();
+//
+//        if(!overrideDao.existsById(override.getId()))
+//        {
+//            response.setErrorCode("99");
+//            response.setErrorMessage("Override Request Not Found");
+//            return response;
+//        }
+//
+//        overrideDao.deleteById(override.getId());
+//        response.setErrorCode("00");
+//        response.setErrorMessage("Successfully Delete Override");
+//        return response;
+//    }
 
     public GetOverrideRespList getOverrideList(){
         GetOverrideRespList respList = new GetOverrideRespList();
@@ -98,7 +114,7 @@ public class OverrideService {
             postOverrideReq.setInputOverride(inputOverride);
         }
 
-        String destionationURL = "https://10.20.218.9:9079/history-absentmg/history";//////////////////////////
+        String destionationURL = "https://10.20.218.9:9079/absentmg-override/override";//////////////////////////
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(postOverrideReq));
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
         String text = responseEntity.getBody();
