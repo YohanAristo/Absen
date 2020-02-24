@@ -28,6 +28,13 @@ public class UserService {
         BaseResponse response = new BaseResponse();
         User user1 = new User();
 
+        if(countChar(user.getName()) > 30)
+        {
+            response.setErrorCode("99");
+            response.setErrorMessage("Name Cannot Be Longer than 30 Characters");
+            return response;
+        }
+
         user1.setRole("member");
         user1.setName(user.getName());
         user1.setPassword(user.getPassword());
@@ -275,5 +282,16 @@ public class UserService {
 
     public String getMonth(int month) {
         return new DateFormatSymbols().getMonths()[month-1];
+    }
+
+    public void testString(){
+        String name = "Anthony Test String";
+        int nameLength = name.length();
+        System.out.println("The name " + name + " contains " + nameLength + "letters.");
+        System.out.println(countChar(name));
+    }
+
+    public int countChar(String input){
+        return input.length();
     }
 }

@@ -138,8 +138,6 @@ public class OverrideService {
         return result;
     }
 
-    public boolean checkExist(int id){
-        return overrideDao.existsById(id);
-    }
+
 
 }
