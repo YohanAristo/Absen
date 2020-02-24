@@ -8,11 +8,7 @@ public class InputData {
     private String inputTrans;
     private String inputAction;
     private String inputUserId;
-//    private String inputDate;
-//    private String inputTimeIn;
-//    private String inputTimeOut;
-//    private String inputStatus;
-//    private String inputDesc;
+    private String inputName;
 
     public String getInputTrans() {
         return inputTrans;
@@ -38,43 +34,11 @@ public class InputData {
         this.inputUserId = inputUserId;
     }
 
-//    public String getInputDate() {
-//        return inputDate;
-//    }
-//
-//    public void setInputDate(String inputDate) {
-//        this.inputDate = inputDate;
-//    }
-//
-//    public String getInputTimeIn() {
-//        return inputTimeIn;
-//    }
-//
-//    public void setInputTimeIn(String inputTimeIn) {
-//        this.inputTimeIn = inputTimeIn;
-//    }
-//
-//    public String getInputTimeOut() {
-//        return inputTimeOut;
-//    }
-//
-//    public void setInputTimeOut(String inputTimeOut) {
-//        this.inputTimeOut = inputTimeOut;
-//    }
-//
-//    public String getInputStatus() {
-//        return inputStatus;
-//    }
-//
-//    public void setInputStatus(String inputStatus) {
-//        this.inputStatus = inputStatus;
-//    }
-//
-//    public String getInputDesc() {
-//        return inputDesc;
-//    }
-//
-//    public void setInputDesc(String inputDesc) {
-//        this.inputDesc = inputDesc;
-//    }
+    public String getInputName() {
+        return inputName;
+    }
+
+    public void setInputName(String inputName) {
+        this.inputName = inputName;
+    }
 }

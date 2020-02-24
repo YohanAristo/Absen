@@ -77,15 +77,7 @@ public class UserService {
         }
     }
 
-//    public GetUserRespList1 getUserList(){
-//        GetUserRespList1 respList = new GetUserRespList1();
-//
-//        List<User> users = userDao.findAll();
-//        respList.setUserList(users);
-//        respList.setErrorCode("00");
-//        respList.setErrorMessage("Successfully Show User");
-//        return respList;
-//    }
+
 
     public GetUserRespList getUserList(){
         GetUserRespList respList = new GetUserRespList();
@@ -163,20 +155,28 @@ public class UserService {
             return resp;
         }
     }
+
+    public String getName(String id){
+        User user = userDao.findById(id).get();
+
+        return user.getName();
+    }
+
     // Post data check ke MF/////////////
     public BaseResponse checkState(PostCheckReq check){
         BaseResponse response = new BaseResponse();
         RestTemplate restTemplate = new RestTemplate();
-//        HttpHeaders headers = new HttpHeaders();
         InputData input = new InputData();
         PostCheckReqMainFrame checkReq = new PostCheckReqMainFrame();
 
-//        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 
         input.setInputUserId(check.getUserId());
         input.setInputAction(check.getState());
+        input.setInputName(getName(check.getUserId()));
 
         checkReq.setInputData(input);
+
+        System.out.println(gson.toJson(checkReq));
 
         //String destionationURL = "http://localhost:8081/";// Diisi API MF.///////////////////////
         String destionationURL = "https://10.20.218.9:9079/absentmg-in-out/absent";
