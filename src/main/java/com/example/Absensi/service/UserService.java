@@ -230,7 +230,7 @@ public class UserService {
         System.out.println(gson.toJson(resp));
 
         //String destionationURL = "http://www.mocky.io/v2/5e54899e3100002900eb31d5";// Diisi API MF.
-        String destionationURL = "https://10.20.218.9:9079/history-absentmg/history";
+        String destionationURL = "https://10.20.218.9:9079/absentmg-history/history";
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(resp));
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
         String text = responseEntity.getBody();
