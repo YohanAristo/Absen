@@ -64,21 +64,6 @@ public class OverrideService {
         return response;
     }
 
-//    public BaseResponse deleteOverride(Override override){
-//        BaseResponse response = new BaseResponse();
-//
-//        if(!overrideDao.existsById(override.getId()))
-//        {
-//            response.setErrorCode("99");
-//            response.setErrorMessage("Override Request Not Found");
-//            return response;
-//        }
-//
-//        overrideDao.deleteById(override.getId());
-//        response.setErrorCode("00");
-//        response.setErrorMessage("Successfully Delete Override");
-//        return response;
-//    }
 
     public GetOverrideRespList getOverrideList(){
         GetOverrideRespList respList = new GetOverrideRespList();
@@ -99,21 +84,27 @@ public class OverrideService {
 
         if(override.getAction().equalsIgnoreCase("I"))
         {
+            inputOverride.setInputTrans("");
             inputOverride.setInputAction("V");
             inputOverride.setInputUserId(override.getUserId());
             inputOverride.setInputDate(override.getDate());
             inputOverride.setInputTimeIn(convertTimeAndroid(override.getTime()));
-            postOverrideReq.setInputOverride(inputOverride);
+            inputOverride.setInputTimeOut("");
         }
         else
         {
+            inputOverride.setInputTrans("");
             inputOverride.setInputAction("V");
             inputOverride.setInputUserId(override.getUserId());
             inputOverride.setInputDate(override.getDate());
             inputOverride.setInputTimeOut(convertTimeAndroid(override.getTime()));
-            postOverrideReq.setInputOverride(inputOverride);
+            inputOverride.setInputTimeIn("");
         }
 
+        postOverrideReq.setInputOverride(inputOverride);
+        System.out.println(gson.toJson(postOverrideReq));
+
+        //String destionationURL = "http://www.mocky.io/v2/5e54964a3100004900eb31ff";
         String destionationURL = "https://10.20.218.9:9079/absentmg-override/override";//////////////////////////
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(postOverrideReq));
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
@@ -122,7 +113,7 @@ public class OverrideService {
         if(responseEntity.getStatusCode()== HttpStatus.OK) {
             GetOverrideRespMainFrame response1 = gson.fromJson(text, GetOverrideRespMainFrame.class);
 
-            if(overrideDao.existsById(override.getId()))
+            if(!overrideDao.existsById(override.getId()))
             {
                 response.setErrorCode("99");
                 response.setErrorMessage("Override Approval Error");

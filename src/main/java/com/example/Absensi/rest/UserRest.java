@@ -52,9 +52,5 @@ public class UserRest {
         return userService.checkState(check);
     }
 
-    @RequestMapping(value = "test")
-    public void testString(){
-        userService.testString();
-    }
 
 }

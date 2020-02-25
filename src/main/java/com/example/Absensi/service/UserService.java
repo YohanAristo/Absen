@@ -35,6 +35,13 @@ public class UserService {
             return response;
         }
 
+        if(countChar(user.getUserId()) > 7)
+        {
+            response.setErrorCode("99");
+            response.setErrorMessage("User Id Cannot Be Longer than 7 Characters");
+            return response;
+        }
+
         user1.setRole("member");
         user1.setName(user.getName());
         user1.setPassword(user.getPassword());
@@ -65,8 +72,6 @@ public class UserService {
         }
 
         User userFound = userDao.findById(id).get();
-//        if(input.getName()!=null)
-//            userFound.setName(input.getName());
         if(input.getPassword()!=null)
             userFound.setPassword(input.getPassword());
 
@@ -180,18 +185,20 @@ public class UserService {
         input.setInputUserId(check.getUserId());
         input.setInputAction(check.getState());
         input.setInputName(getName(check.getUserId()));
+        input.setInputTrans("");
 
         checkReq.setInputData(input);
 
         System.out.println(gson.toJson(checkReq));
 
-        //String destionationURL = "http://localhost:8081/";// Diisi API MF.///////////////////////
+        //String destionationURL = "http://www.mocky.io/v2/5e548eea3100006000eb31ea";// Diisi API MF.///////////////////////
         String destionationURL = "https://10.20.218.9:9079/absentmg-in-out/absent";
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(checkReq));
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
         String text = responseEntity.getBody();
-
+        //System.out.println(text);
         if(responseEntity.getStatusCode()==HttpStatus.OK) {
+
             GetCheckRespMainFrame respGet = gson.fromJson(text, GetCheckRespMainFrame.class);
             response.setErrorMessage(respGet.getOutputData().getErrorMessage());
             response.setErrorCode(respGet.getOutputData().getErrorCode());
@@ -216,10 +223,13 @@ public class UserService {
         input.setInputMm(user.getMonth());
         input.setInputYyyy(user.getYear());
         input.setInputAction("H");
+        input.setInputTrans("");
 
         resp.setInputHistory(input);
 
-        //String destionationURL = "http://www.mocky.io/v2/5e465de03300002d410260c0";// Diisi API MF.
+        System.out.println(gson.toJson(resp));
+
+        //String destionationURL = "http://www.mocky.io/v2/5e54899e3100002900eb31d5";// Diisi API MF.
         String destionationURL = "https://10.20.218.9:9079/history-absentmg/history";
         HttpEntity<String> entity = new HttpEntity<>(gson.toJson(resp));
         ResponseEntity<String> responseEntity = restTemplate.exchange(destionationURL, HttpMethod.POST, entity, String.class);
@@ -282,13 +292,6 @@ public class UserService {
 
     public String getMonth(int month) {
         return new DateFormatSymbols().getMonths()[month-1];
-    }
-
-    public void testString(){
-        String name = "Anthony Test String";
-        int nameLength = name.length();
-        System.out.println("The name " + name + " contains " + nameLength + "letters.");
-        System.out.println(countChar(name));
     }
 
     public int countChar(String input){

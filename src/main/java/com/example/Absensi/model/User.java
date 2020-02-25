@@ -15,10 +15,7 @@ public class User {
     private String password;
     private String role;
 
-    public User() {
-    }
-
-    public String getUserId() {
+   public String getUserId() {
         return userId;
     }
 
