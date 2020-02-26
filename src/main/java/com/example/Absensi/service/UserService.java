@@ -4,6 +4,7 @@ import com.example.Absensi.dao.UserDao;
 import com.example.Absensi.entity.BaseResponse;
 import com.example.Absensi.entity.userEntity.*;
 import com.example.Absensi.model.User;
+import com.example.Absensi.util.ConverterString;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +22,8 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
+    public ConverterString converterString;
+
     Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
     //ADMIN
@@ -28,14 +31,14 @@ public class UserService {
         BaseResponse response = new BaseResponse();
         User user1 = new User();
 
-        if(countChar(user.getName()) > 30)
+        if(converterString.countChar(user.getName()) > 30)
         {
             response.setErrorCode("99");
             response.setErrorMessage("Name Cannot Be Longer than 30 Characters");
             return response;
         }
 
-        if(countChar(user.getUserId()) > 7)
+        if(converterString.countChar(user.getUserId()) > 7)
         {
             response.setErrorCode("99");
             response.setErrorMessage("User Id Cannot Be Longer than 7 Characters");
@@ -96,6 +99,13 @@ public class UserService {
         List<UserList> myList = new ArrayList<>();
 
         List<User> users = userDao.findAll();
+
+        if(users.isEmpty())
+        {
+            respList.setUserList(myList);
+            respList.setErrorCode("00");
+            respList.setErrorMessage("User Data is Empty");
+        }
 
         for(User data : users){
            UserList temp = new UserList();
@@ -241,10 +251,17 @@ public class UserService {
 
             List<HistData> list = response1.getOutputHistory().getHistData();
 
+            if(list.isEmpty())
+            {
+                response.setHistData(list);
+                response.setErrorCode("99");
+                response.setErrorMessage("History Data is Empty");
+            }
+
             for (HistData data : list) {
-                data.setOutputTimeIn(convertTime(data.getOutputTimeIn()));
-                data.setOutputTimeOut(convertTime(data.getOutputTimeOut()));
-                data.setOutputDate(convertDate(data.getOutputDate()));
+                data.setOutputTimeIn(converterString.convertTime(data.getOutputTimeIn()));
+                data.setOutputTimeOut(converterString.convertTime(data.getOutputTimeOut()));
+                data.setOutputDate(converterString.convertDate(data.getOutputDate()));
             }
 
             response.setOutputUserId(response1.getOutputHistory().getOutputUserId());
@@ -264,6 +281,7 @@ public class UserService {
         return response;
     }
 
+    /*
     public String convertTime(String input){
         String result, hh, mm, ss;
         String[] splits = input.split("\\.");
@@ -278,14 +296,15 @@ public class UserService {
     }
 
     public String convertDate(String input){
-        String result, day, mon, month, year;
+        String result, day, mon, monFormat, year;
         String[] split = input.split("-");
 
         year = split[0];
         mon = getMonth(Integer.parseInt(split[1]));
+        monFormat = mon.substring(0,2);
         day = split[2];
 
-        result = day.concat(" ").concat(mon).concat(" ").concat(year);
+        result = day.concat(" ").concat(monFormat).concat(" ").concat(year);
 
         return result;
     }
@@ -297,4 +316,6 @@ public class UserService {
     public int countChar(String input){
         return input.length();
     }
+
+     */
 }

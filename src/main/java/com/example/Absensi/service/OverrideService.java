@@ -4,6 +4,7 @@ import com.example.Absensi.dao.OverrideDao;
 import com.example.Absensi.entity.overrideEntity.*;
 import com.example.Absensi.entity.BaseResponse;
 import com.example.Absensi.model.Override;
+import com.example.Absensi.util.ConverterString;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,6 +24,8 @@ public class OverrideService {
 
     @Autowired
     OverrideDao overrideDao;
+
+    public ConverterString converterString;
 
     Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
@@ -67,10 +71,29 @@ public class OverrideService {
 
     public GetOverrideRespList getOverrideList(){
         GetOverrideRespList respList = new GetOverrideRespList();
+        List<Override> overrideList = new ArrayList<>();
 
         List<Override> overrides = overrideDao.findAll();
 
-        respList.setOverrideList(overrides);
+        if (overrides.isEmpty())
+        {
+            respList.setOverrideList(overrides);
+            respList.setErrorCode("99");
+            respList.setErrorMessage("Override Data is Empty");
+            return respList;
+        }
+
+        for (Override data : overrides){
+            Override temp = new Override();
+            temp.setAction(data.getAction());
+            temp.setTime(data.getTime());
+            temp.setDate(converterString.convertDate(data.getDate()));
+            temp.setUserId(data.getUserId());
+            temp.setId(data.getId());
+            overrideList.add(temp);
+        }
+
+        respList.setOverrideList(overrideList);
         respList.setErrorCode("00");
         respList.setErrorMessage("Successfully Show User");
         return respList;
