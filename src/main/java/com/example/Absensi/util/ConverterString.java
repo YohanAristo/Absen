@@ -1,7 +1,10 @@
 package com.example.Absensi.util;
 
+import org.springframework.stereotype.Component;
+
 import java.text.DateFormatSymbols;
 
+@Component
 public class ConverterString {
     public String convertTime(String input){
         String result, hh, mm, ss;

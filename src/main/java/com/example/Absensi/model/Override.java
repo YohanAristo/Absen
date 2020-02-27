@@ -12,11 +12,11 @@ import javax.persistence.Id;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Override {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String userId;
-    private String date;
-    private String time;
+    private String dates;
+    private String times;
     private String action;
 
     public int getId() {
@@ -35,20 +35,20 @@ public class Override {
         this.userId = userId;
     }
 
-    public String getDate() {
-        return date;
+    public String getDates() {
+        return dates;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDates(String date) {
+        this.dates = date;
     }
 
-    public String getTime() {
-        return time;
+    public String getTimes() {
+        return times;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimes(String time) {
+        this.times = time;
     }
 
     public String getAction() {

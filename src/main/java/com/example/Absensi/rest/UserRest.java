@@ -52,5 +52,9 @@ public class UserRest {
         return userService.checkState(check);
     }
 
+    @GetMapping(value = "interns/user")
+    public long countUser(){
+        return userService.countUser();
+    }
 
 }

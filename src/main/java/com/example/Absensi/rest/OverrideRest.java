@@ -36,4 +36,9 @@ public class OverrideRest {
         return overrideService.getOverrideList();
     }
 
+    @GetMapping(value = "interns/override")
+    public long countOverride(){
+        return overrideService.countOverride();
+    }
+
 }

@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class PostOverrideReq {
     private String userId;
-    private String date;
-    private String time;
+    private String dates;
+    private String times;
     private String action;
 
     public String getUserId() {
@@ -18,20 +18,20 @@ public class PostOverrideReq {
         this.userId = userId;
     }
 
-    public String getDate() {
-        return date;
+    public String getDates() {
+        return dates;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDates(String dates) {
+        this.dates = dates;
     }
 
-    public String getTime() {
-        return time;
+    public String getTimes() {
+        return times;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimes(String times) {
+        this.times = times;
     }
 
     public String getAction() {

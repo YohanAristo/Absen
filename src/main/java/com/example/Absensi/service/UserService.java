@@ -22,7 +22,8 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
-    public ConverterString converterString;
+    @Autowired
+    ConverterString converterString;
 
     Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
@@ -279,6 +280,10 @@ public class UserService {
         }
 
         return response;
+    }
+
+    public long countUser(){
+        return userDao.count();
     }
 
     /*

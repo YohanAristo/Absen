@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@Table(name = "tbl_user")
 public class User {
     @Id
     private String userId;

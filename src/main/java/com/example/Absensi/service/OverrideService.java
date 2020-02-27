@@ -25,7 +25,8 @@ public class OverrideService {
     @Autowired
     OverrideDao overrideDao;
 
-    public ConverterString converterString;
+    @Autowired
+    ConverterString converterString;
 
     Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
 
@@ -34,9 +35,11 @@ public class OverrideService {
         Override override1 = new Override();
 
         override1.setUserId(override.getUserId());
-        override1.setDate(override.getDate());
-        override1.setTime(override.getTime());
+        override1.setDates(override.getDates());
+        override1.setTimes(override.getTimes());
         override1.setAction(override.getAction());
+
+        //System.out.println(gson.toJson(override1));
 
         Override saveOverride = overrideDao.save(override1);
 
@@ -86,8 +89,8 @@ public class OverrideService {
         for (Override data : overrides){
             Override temp = new Override();
             temp.setAction(data.getAction());
-            temp.setTime(data.getTime());
-            temp.setDate(converterString.convertDate(data.getDate()));
+            temp.setTimes(data.getTimes());
+            temp.setDates(converterString.convertDate(data.getDates()));
             temp.setUserId(data.getUserId());
             temp.setId(data.getId());
             overrideList.add(temp);
@@ -110,8 +113,8 @@ public class OverrideService {
             inputOverride.setInputTrans("");
             inputOverride.setInputAction("V");
             inputOverride.setInputUserId(override.getUserId());
-            inputOverride.setInputDate(override.getDate());
-            inputOverride.setInputTimeIn(convertTimeAndroid(override.getTime()));
+            inputOverride.setInputDate(override.getDates());
+            inputOverride.setInputTimeIn(convertTimeAndroid(override.getTimes()));
             inputOverride.setInputTimeOut("");
         }
         else
@@ -119,8 +122,8 @@ public class OverrideService {
             inputOverride.setInputTrans("");
             inputOverride.setInputAction("V");
             inputOverride.setInputUserId(override.getUserId());
-            inputOverride.setInputDate(override.getDate());
-            inputOverride.setInputTimeOut(convertTimeAndroid(override.getTime()));
+            inputOverride.setInputDate(override.getDates());
+            inputOverride.setInputTimeOut(convertTimeAndroid(override.getTimes()));
             inputOverride.setInputTimeIn("");
         }
 
@@ -168,6 +171,8 @@ public class OverrideService {
         return result;
     }
 
-
+    public long countOverride(){
+        return overrideDao.count();
+    }
 
 }
