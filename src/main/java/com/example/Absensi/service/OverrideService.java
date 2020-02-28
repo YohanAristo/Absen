@@ -55,7 +55,7 @@ public class OverrideService {
         }
     }
 
-    public BaseResponse deleteOverride(Integer input){
+    public BaseResponse deleteOverride(String input){
         BaseResponse response = new BaseResponse();
 
         if(!overrideDao.existsById(input))

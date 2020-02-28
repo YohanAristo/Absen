@@ -21,7 +21,7 @@ public class OverrideRest {
     }
 
     @DeleteMapping(value = "absentmg-in-out/override/reject/{id}")
-    public BaseResponse deleteOverride(@PathVariable(value = "id") Integer id){
+    public BaseResponse deleteOverride(@PathVariable(value = "id") String id){
         return overrideService.deleteOverride(id);
     }
 
