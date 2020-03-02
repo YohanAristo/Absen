@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@Table(name = "tbl_user")
+@Table(name = "tbl_user_magang")
 public class User {
     @Id
     private String userId;

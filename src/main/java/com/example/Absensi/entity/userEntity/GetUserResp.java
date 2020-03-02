@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class GetUserResp extends BaseResponse {
-   private User user;
+   /*private User user;
 
     public User getUser() {
         return user;
@@ -15,5 +15,42 @@ public class GetUserResp extends BaseResponse {
 
     public void setUser(User user) {
         this.user = user;
+    }*/
+
+    private String userId;
+    private String name;
+    private String password;
+    private String role;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

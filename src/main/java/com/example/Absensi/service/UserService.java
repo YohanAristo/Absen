@@ -149,7 +149,11 @@ public class UserService {
 
         User user = userDao.findById(id).get();
 
-        resp.setUser(user);
+        //resp.setUser(user);
+        resp.setUserId(user.getUserId());
+        resp.setName(user.getName());
+        resp.setPassword(user.getPassword());
+        resp.setRole(user.getRole());
         resp.setErrorCode("99");
         resp.setErrorMessage("Successfully Get User");
         return resp;
@@ -167,7 +171,10 @@ public class UserService {
 
         User user = userDao.findById(input.getUserId()).get();
         if(user.getPassword().equalsIgnoreCase(input.getPassword())) {
-            resp.setUser(user);
+            resp.setUserId(user.getUserId());
+            resp.setName(user.getName());
+            resp.setPassword(user.getPassword());
+            resp.setRole(user.getRole());
             resp.setErrorCode("00");
             resp.setErrorMessage("Login Successfully");
             return resp;
