@@ -8,12 +8,22 @@ import com.example.Absensi.util.ConverterString;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.DateFormatSymbols;
+import javax.net.ssl.SSLContext;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.util.*;
 
 @Service
@@ -26,6 +36,27 @@ public class UserService {
     ConverterString converterString;
 
     Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
+
+    public RestTemplate restTemplate()
+            throws KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+        TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+
+        SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
+                .loadTrustMaterial(null, acceptingTrustStrategy)
+                .build();
+
+        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext);
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setSSLSocketFactory(csf)
+                .build();
+
+        HttpComponentsClientHttpRequestFactory requestFactory =
+                new HttpComponentsClientHttpRequestFactory();
+
+        requestFactory.setHttpClient(httpClient);
+        return new RestTemplate(requestFactory);
+    }
 
     //ADMIN
     public BaseResponse postUser(PostUserReq user){
@@ -106,6 +137,7 @@ public class UserService {
             respList.setUserList(myList);
             respList.setErrorCode("00");
             respList.setErrorMessage("User Data is Empty");
+            return respList;
         }
 
         for(User data : users){
@@ -192,13 +224,17 @@ public class UserService {
         return user.getName();
     }
 
+
+
     // Post data check ke MF/////////////
-    public BaseResponse checkState(PostCheckReq check){
+    public BaseResponse checkState(PostCheckReq check) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         BaseResponse response = new BaseResponse();
-        RestTemplate restTemplate = new RestTemplate();
+
+        RestTemplate restTemplate = restTemplate();
+
+        //RestTemplate restTemplate = new RestTemplate();
         InputData input = new InputData();
         PostCheckReqMainFrame checkReq = new PostCheckReqMainFrame();
-
 
         input.setInputUserId(check.getUserId());
         input.setInputAction(check.getState());

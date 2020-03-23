@@ -102,6 +102,36 @@ public class OverrideService {
         return respList;
     }
 
+    public GetOverrideRespList getOverrideListUser(String id){
+        GetOverrideRespList respList = new GetOverrideRespList();
+        List<Override> overrideList = new ArrayList<>();
+
+        List<Override> overrides = overrideDao.findOverridesByUserIdOrderByDatesAsc(id);
+
+        if (overrides.isEmpty())
+        {
+            respList.setOverrideList(overrides);
+            respList.setErrorCode("99");
+            respList.setErrorMessage("Override Data is Empty");
+            return respList;
+        }
+
+        for (Override data : overrides){
+            Override temp = new Override();
+            temp.setAction(data.getAction());
+            temp.setTimes(data.getTimes());
+            temp.setDates(converterString.convertDate(data.getDates()));
+            temp.setUserId(data.getUserId());
+            temp.setId(data.getId());
+            overrideList.add(temp);
+        }
+
+        respList.setOverrideList(overrideList);
+        respList.setErrorCode("00");
+        respList.setErrorMessage("Successfully Show User");
+        return respList;
+    }
+
     public BaseResponse approvalOverride(Override override){
         BaseResponse response = new BaseResponse();
         RestTemplate restTemplate = new RestTemplate();

@@ -36,6 +36,11 @@ public class OverrideRest {
         return overrideService.getOverrideList();
     }
 
+    @GetMapping(value = "absentmg-in-out/override/list/{id}")
+    public GetOverrideRespList overrideListUser(@PathVariable(value = "id") String id){
+        return overrideService.getOverrideListUser(id);
+    }
+
     @GetMapping(value = "interns/override")
     public long countOverride(){
         return overrideService.countOverride();

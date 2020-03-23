@@ -1,5 +1,6 @@
 package com.example.Absensi;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +9,8 @@ public class AbsensiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AbsensiApplication.class, args);
+
+
 	}
 
 }

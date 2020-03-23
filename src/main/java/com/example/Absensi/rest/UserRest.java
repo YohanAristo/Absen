@@ -6,6 +6,10 @@ import com.example.Absensi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
 @RestController
 public class UserRest {
 
@@ -48,7 +52,7 @@ public class UserRest {
     }
 
     @PostMapping(value = "absentmg-in-out/absent")
-    public BaseResponse checkState(@RequestBody PostCheckReq check){
+    public BaseResponse checkState(@RequestBody PostCheckReq check) throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         return userService.checkState(check);
     }
 
